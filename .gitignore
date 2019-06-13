@@ -1,0 +1,4 @@
+perf-testing-aws-resources/
+venv/
+attributes.yml
+cf-template.yml

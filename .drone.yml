@@ -1,0 +1,25 @@
+pipeline:
+  apply_stack:
+    image: python:3.7-alpine
+    secrets:
+      - aws_default_region
+      - aws_access_key_id
+      - aws_secret_access_key
+    commands:
+      - apk add --no-cache gcc musl-dev make
+      - make
+    when:
+      event:
+        - push
+
+  inspec_exec:
+    image: chef/inspec:current
+    secrets:
+      - aws_default_region
+      - aws_access_key_id
+      - aws_secret_access_key
+    commands:
+      - source inspec_exec.sh
+    when:
+      event:
+        - push
